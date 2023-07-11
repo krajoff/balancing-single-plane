@@ -1,6 +1,7 @@
 package regular;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -36,7 +37,9 @@ public class Repository {
     @Override
     public String toString() {
         return "Vibration data:\n" +
-                repository ;
+                Arrays.toString(repository.toArray()).
+                        replace("[", "").
+                        replace("]", "").
+                        replace(", ", "");
     }
-
 }

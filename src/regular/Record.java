@@ -2,10 +2,10 @@ package regular;
 
 public class Record {
     private String mode;
-    private double valueVibration;
+    private double magnitudeVibration;
     private double phaseVibration;
     private Complex complexVibration;
-    private double valueWeight;
+    private double magnitudeWeight;
     private double phaseWeight;
     private Complex complexWeight;
     private int reference;
@@ -15,27 +15,29 @@ public class Record {
     private Stage stage;
 
     public Record(String mode,
-                  double valueVibration,
+                  double magnitudeVibration,
                   double phaseVibration,
-                  double valueWeight,
+                  double magnitudeWeight,
                   double phaseWeight,
                   int reference,
                   Stage stage) {
         this.mode = mode;
-        this.valueVibration = valueVibration;
+        this.magnitudeVibration = magnitudeVibration;
         this.phaseVibration = phaseVibration;
-        this.complexVibration = Transform.toComplex(valueVibration, phaseVibration);
-        this.valueWeight = valueWeight;
+        this.complexVibration = Transform.toComplex(
+                magnitudeVibration, phaseVibration);
+        this.magnitudeWeight = magnitudeWeight;
         this.phaseWeight = phaseWeight;
-        this.complexWeight = Transform.toComplex(valueWeight, phaseWeight);
+        this.complexWeight = Transform.toComplex(
+                magnitudeWeight, phaseWeight);
         this.reference = reference;
         this.stage = stage;
 
     }
 
-    Record(double valueVibration,
+    Record(double magnitudeVibration,
            double phaseVibration,
-           double valueWeight,
+           double magnitudeWeight,
            double phaseWeight) {
         this.mode = "None";
         this.reference = -1;
@@ -45,10 +47,10 @@ public class Record {
     @Override
     public String toString() {
         return "mode='" + mode + '\'' +
-                "; vP2P=" + String.format("%.0f", valueVibration) +
+                "; mP2P=" + String.format("%.0f", magnitudeVibration) +
                 "; pP2P=" + String.format("%.0f", phaseVibration) +
                 "; zP2P=" + complexVibration.toString(2) +
-                "; vWeight=" + String.format("%.0f", valueWeight) +
+                "; mWeight=" + String.format("%.0f", magnitudeWeight) +
                 "; pWeight=" + String.format("%.0f", phaseWeight) +
                 "; zWeight=" + complexWeight.toString(2) +
                 "; ref=" + reference +
@@ -68,7 +70,7 @@ public class Record {
     }
 
     public double getValueVibration() {
-        return valueVibration;
+        return magnitudeVibration;
     }
 
     public double getPhaseVibration() {
@@ -76,7 +78,7 @@ public class Record {
     }
 
     public double getValueWeight() {
-        return valueWeight;
+        return magnitudeWeight;
     }
 
     public double getPhaseWeight() {
