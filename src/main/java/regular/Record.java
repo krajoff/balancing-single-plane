@@ -1,4 +1,4 @@
-package regular;
+package  regular;
 
 public class Record {
     private String mode;
@@ -44,17 +44,39 @@ public class Record {
         this.stage = Stage.Off;
     }
 
+//    @Override
+//    public String toString() {
+//        return "mode='" + mode + '\'' +
+//                "; mP2P=" + String.format("%.0f", magnitudeVibration) +
+//                "; pP2P=" + String.format("%.0f", phaseVibration) +
+//                "; zP2P=" + complexVibration.toString(2) +
+//                "; mWeight=" + String.format("%.0f", magnitudeWeight) +
+//                "; pWeight=" + String.format("%.0f", phaseWeight) +
+//                "; zWeight=" + complexWeight.toString(2) +
+//                "; ref=" + reference +
+//                "; stage=" + stage + "\n";
+//    }
     @Override
     public String toString() {
-        return "mode='" + mode + '\'' +
-                "; mP2P=" + String.format("%.0f", magnitudeVibration) +
-                "; pP2P=" + String.format("%.0f", phaseVibration) +
-                "; zP2P=" + complexVibration.toString(2) +
-                "; mWeight=" + String.format("%.0f", magnitudeWeight) +
-                "; pWeight=" + String.format("%.0f", phaseWeight) +
-                "; zWeight=" + complexWeight.toString(2) +
-                "; ref=" + reference +
-                "; stage=" + stage + "\n";
+        return "| " + " ".repeat(10-mode.length()) + mode +" | " +
+                " ".repeat(9-String.valueOf(magnitudeVibration).length()) +
+                String.format("%.0f", magnitudeVibration)
+                + " | " +
+                " ".repeat(9-String.valueOf(phaseVibration).length()) +
+                String.format("%.0f", phaseVibration) + " | " +
+                " ".repeat(17-complexVibration.toString(2).length()) +
+                complexVibration.toString(2) + " | " +
+                " ".repeat(9-String.valueOf(magnitudeWeight).length()) +
+                String.format("%.0f", magnitudeWeight) + " | " +
+                " ".repeat(9-String.valueOf(phaseWeight).length()) +
+                String.format("%.0f", phaseWeight) + " | " +
+                " ".repeat(18-complexWeight.toString(2).length()) +
+                complexWeight.toString(2) + " | " +
+                " ".repeat(3-String.valueOf(reference).length()) +
+                reference + " | " +
+                " ".repeat(3-String.valueOf(stage).length()) +
+                stage + " | " + "\n";
+
     }
 
     public Complex getComplexVibration() {

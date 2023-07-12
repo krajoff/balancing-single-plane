@@ -36,10 +36,24 @@ public class Repository {
 
     @Override
     public String toString() {
-        return "Vibration data:\n" +
-                Arrays.toString(repository.toArray()).
+        return
+        "+------------+---------+---------+-------------------" +
+        "+---------+---------+--------------------" +
+        "+-----+-----+\n" + "|       mode " +
+        "|    mP2P |    pP2P |              zP2P " +
+        "| mWeight | pWeight |            zWeight " +
+        "| ref | use |\n" +
+        "+------------+---------+---------+-------------------" +
+        "+---------+---------+--------------------" +
+        "+-----+-----+\n" +
+
+        Arrays.toString(repository.toArray()).
                         replace("[", "").
                         replace("]", "").
-                        replace(", ", "");
+                        replace(", ", "") +
+
+        "+------------+---------+---------+-------------------" +
+        "+---------+---------+--------------------" +
+        "+-----+-----+";
     }
 }

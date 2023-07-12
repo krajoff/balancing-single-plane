@@ -17,7 +17,9 @@ public class Main {
                 1, Record.Stage.On));
         System.out.println(rep);
 
-        ImportExcel.xls("D:\\JAVA\\TupolangLower2_after_cutted.xls");
 
+        Repository pp = ImportExcel.xls("D:\\JAVA\\TupolangLower2_after_cutted.xls");
+        System.out.println(pp);
     }
+
 }
