@@ -7,45 +7,31 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import regular.Record;
-import regular.Repository;
-public class ImportExcel {
 
+public class ImportTable {
     public static Repository xls(String filepath) {
-        String mode = null;
+        String mode = "";
         double magnitudeVibration = 0;
         double phaseVibration = 0;
-        Complex complexVibration;
         double magnitudeWeight = 0;
         double phaseWeight = 0;
-        Complex complexWeight;
         int reference = 0;
         Record.Stage use = Record.Stage.Off;
-
         Repository rep = new Repository();
         try {
             FileInputStream file = new FileInputStream(filepath);
             HSSFWorkbook workbook = new HSSFWorkbook(file);
             HSSFSheet sheet = workbook.getSheetAt(0);
-
-            int id, cnt;
+            int columnPos;
+            int rowPos = 0;
             for (Row row : sheet) {
                 Iterator<Cell> cellIterator
                         = row.cellIterator();
-                cnt = 0;
+                columnPos = 0;
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    id = 0;
-                    if (cell.getCellType() == CellType.NUMERIC) {
-                        System.out.print(cell.getNumericCellValue() + "\t | \t ");
-                    } else if (cell.getCellType() == CellType.STRING) {
-                        System.out.print(cell.getStringCellValue() + "\t | \t");
-                    }
-
-                    if (cnt == 0) {
-                        switch (id) {
+                    if (rowPos != 0) {
+                        switch (columnPos) {
                             case 0:
                                 mode = cell.getStringCellValue();
                                 break;
@@ -72,43 +58,19 @@ public class ImportExcel {
                                 }
                                 break;
                         }
-                        cnt++;
                     }
+                    columnPos++;
                 }
-                System.out.println();
-
-                rep.add(new Record(mode, magnitudeVibration, phaseVibration,
-                        magnitudeWeight, phaseWeight, reference, use));
+                if (rowPos != 0) {
+                    rep.add(new Record(mode, magnitudeVibration, phaseVibration,
+                            magnitudeWeight, phaseWeight, reference, use));
+                }
+                rowPos++;
             }
             file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return rep;
-    }
-
-    public static void xlsx(String filepath) {
-        try {
-            FileInputStream file = new FileInputStream(filepath);
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheetAt(0);
-
-            for (Row row : sheet) {
-                Iterator<Cell> cellIterator
-                        = row.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    if (cell.getCellType() == CellType.NUMERIC) {
-                        System.out.print(cell.getNumericCellValue() + "\t | \t ");
-                    } else if (cell.getCellType() == CellType.STRING) {
-                        System.out.print(cell.getStringCellValue() + "\t | \t");
-                    }
-                }
-                System.out.println();
-            }
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

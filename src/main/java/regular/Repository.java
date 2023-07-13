@@ -1,9 +1,8 @@
 package regular;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
+import org.apache.poi.ss.usermodel.Cell;
+
+import java.util.*;
 
 public class Repository {
 
@@ -22,12 +21,17 @@ public class Repository {
     }
 
     public void remove(Record record) {
-        ListIterator<Record> iterator = repository.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().equals(record)) {
-                iterator.remove();
-            }
+        repository.removeIf(record1 -> record1.equals(record));
+    }
+
+
+    public int unique() {
+        Iterator<Record> record = repository.iterator();
+        int unique = 0;
+        while (record.hasNext()) {
+            String mode = record.next().getMode();
         }
+        return 0;
     }
 
     public List<Record> getRepository() {
@@ -37,23 +41,23 @@ public class Repository {
     @Override
     public String toString() {
         return
-        "+------------+---------+---------+-------------------" +
-        "+---------+---------+--------------------" +
-        "+-----+-----+\n" + "|       mode " +
-        "|    mP2P |    pP2P |              zP2P " +
-        "| mWeight | pWeight |            zWeight " +
-        "| ref | use |\n" +
-        "+------------+---------+---------+-------------------" +
-        "+---------+---------+--------------------" +
-        "+-----+-----+\n" +
+                "+------------+---------+---------+-------------------" +
+                        "+---------+---------+--------------------" +
+                        "+-----+-----+\n" + "|       mode " +
+                        "|    mP2P |    pP2P |              zP2P " +
+                        "| mWeight | pWeight |            zWeight " +
+                        "| ref | use |\n" +
+                        "+------------+---------+---------+-------------------" +
+                        "+---------+---------+--------------------" +
+                        "+-----+-----+\n" +
 
-        Arrays.toString(repository.toArray()).
-                        replace("[", "").
-                        replace("]", "").
-                        replace(", ", "") +
+                        Arrays.toString(repository.toArray()).
+                                replace("[", "").
+                                replace("]", "").
+                                replace(", ", "") +
 
-        "+------------+---------+---------+-------------------" +
-        "+---------+---------+--------------------" +
-        "+-----+-----+";
+                        "+------------+---------+---------+-------------------" +
+                        "+---------+---------+--------------------" +
+                        "+-----+-----+";
     }
 }

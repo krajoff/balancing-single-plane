@@ -8,6 +8,7 @@ public class Record {
     private double magnitudeWeight;
     private double phaseWeight;
     private Complex complexWeight;
+    private Complex totalComplexWeight;
     private int reference;
 
     public enum Stage {On, Off}
@@ -30,6 +31,8 @@ public class Record {
         this.phaseWeight = phaseWeight;
         this.complexWeight = Transform.toComplex(
                 magnitudeWeight, phaseWeight);
+        this.totalComplexWeight = Transform.toComplex(
+                0, 0);
         this.reference = reference;
         this.stage = stage;
 
@@ -59,16 +62,16 @@ public class Record {
     @Override
     public String toString() {
         return "| " + " ".repeat(10-mode.length()) + mode +" | " +
-                " ".repeat(9-String.valueOf(magnitudeVibration).length()) +
+                " ".repeat(7-String.format("%.0f", magnitudeVibration).length()) +
                 String.format("%.0f", magnitudeVibration)
                 + " | " +
-                " ".repeat(9-String.valueOf(phaseVibration).length()) +
+                " ".repeat(7-String.format("%.0f", phaseVibration).length()) +
                 String.format("%.0f", phaseVibration) + " | " +
                 " ".repeat(17-complexVibration.toString(2).length()) +
                 complexVibration.toString(2) + " | " +
-                " ".repeat(9-String.valueOf(magnitudeWeight).length()) +
+                " ".repeat(7-String.format("%.0f", magnitudeWeight).length()) +
                 String.format("%.0f", magnitudeWeight) + " | " +
-                " ".repeat(9-String.valueOf(phaseWeight).length()) +
+                " ".repeat(7-String.format("%.0f", phaseWeight).length()) +
                 String.format("%.0f", phaseWeight) + " | " +
                 " ".repeat(18-complexWeight.toString(2).length()) +
                 complexWeight.toString(2) + " | " +
