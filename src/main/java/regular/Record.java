@@ -8,8 +8,10 @@ public class Record {
     private double magnitudeWeight;
     private double phaseWeight;
     private Complex complexWeight;
-    private Complex totalComplexWeight;
     private int reference;
+    private double totalMagnitudeWeight;
+    private double totalPhaseWeight;
+    private Complex totalComplexWeight;
 
     public enum Stage {On, Off}
 
@@ -31,9 +33,11 @@ public class Record {
         this.phaseWeight = phaseWeight;
         this.complexWeight = Transform.toComplex(
                 magnitudeWeight, phaseWeight);
-        this.totalComplexWeight = Transform.toComplex(
-                0, 0);
         this.reference = reference;
+        this.totalMagnitudeWeight = 0;
+        this.totalPhaseWeight = 0;
+        this.totalComplexWeight = Transform.toComplex(
+                totalMagnitudeWeight, totalPhaseWeight);
         this.stage = stage;
 
     }
@@ -80,6 +84,18 @@ public class Record {
                 " ".repeat(3-String.valueOf(stage).length()) +
                 stage + " | " + "\n";
 
+    }
+
+    public void setTotalMagnitudeWeight(double totalMagnitudeWeight) {
+        this.totalMagnitudeWeight = totalMagnitudeWeight;
+    }
+
+    public void setTotalPhaseWeight(double totalPhaseWeight) {
+        this.totalPhaseWeight = totalPhaseWeight;
+    }
+
+    public void setTotalComplexWeight(Complex totalComplexWeight) {
+        this.totalComplexWeight = totalComplexWeight;
     }
 
     public Complex getComplexVibration() {

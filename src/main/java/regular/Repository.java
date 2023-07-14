@@ -25,13 +25,26 @@ public class Repository {
     }
 
 
-    public int unique() {
+    public Set<String> uniqueMode() {
         Iterator<Record> record = repository.iterator();
-        int unique = 0;
+        Set<String> set = new HashSet<>();
         while (record.hasNext()) {
             String mode = record.next().getMode();
+            set.add(mode);
         }
-        return 0;
+        return set;
+    }
+
+    public Repository getRepositoryUniqueMode(String mode){
+        Iterator<Record> record = repository.iterator();
+        Repository repository = new Repository();
+        while (record.hasNext()) {
+            Record tempRecord = record.next();
+            if (tempRecord.getMode().equals(mode)) {
+                repository.add(tempRecord);
+            }
+        }
+        return repository;
     }
 
     public List<Record> getRepository() {
@@ -40,24 +53,28 @@ public class Repository {
 
     @Override
     public String toString() {
-        return
-                "+------------+---------+---------+-------------------" +
-                        "+---------+---------+--------------------" +
-                        "+-----+-----+\n" + "|       mode " +
-                        "|    mP2P |    pP2P |              zP2P " +
-                        "| mWeight | pWeight |            zWeight " +
-                        "| ref | use |\n" +
-                        "+------------+---------+---------+-------------------" +
-                        "+---------+---------+--------------------" +
-                        "+-----+-----+\n" +
-
-                        Arrays.toString(repository.toArray()).
-                                replace("[", "").
-                                replace("]", "").
-                                replace(", ", "") +
-
-                        "+------------+---------+---------+-------------------" +
-                        "+---------+---------+--------------------" +
-                        "+-----+-----+";
+        return "Repository{" +
+                "repository=" + repository +
+                '}';
     }
+
+    public void printTable() {
+        System.out.print("+------------+---------+---------+-------------------");
+        System.out.print("+---------+---------+--------------------");
+        System.out.print("+-----+-----+\n" + "|       mode ");
+        System.out.print("|    mP2P |    pP2P |              zP2P ");
+        System.out.print("| mWeight | pWeight |            zWeight ");
+        System.out.print("| ref | use |\n");
+        System.out.print("+------------+---------+---------+-------------------");
+        System.out.print("+---------+---------+--------------------");
+        System.out.print("+-----+-----+\n");
+        System.out.print(Arrays.toString(repository.toArray()).
+                replace("[", "").
+                replace("]", "").
+                replace(", ", ""));
+        System.out.print("+------------+---------+---------+-------------------");
+        System.out.print("+---------+---------+--------------------");
+        System.out.println("+-----+-----+");
+    }
+
 }

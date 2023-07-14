@@ -5,10 +5,11 @@ import regular.Repository;
 
 public class Main {
     public static void main(String[] args) {
-        String filepath = "D:\\JAVA\\TupolangLower2_after_cutted.xls";
-        //filepath = "D:\\JAVA\\Test_GeneralCase.xls";
-        Repository repository = ImportTable.xls(filepath);
-
-        System.out.println(repository);
+        String partpath = ".\\src\\main\\java\\sample\\";
+        String filepath = "TupolangLower2_after_cutted.xls";
+        //filepath = "Test_GeneralCase.xls";
+        Repository repository = ImportTable.xls(partpath + filepath);
+        repository.printTable();
+        repository.getRepositoryUniqueMode("100%n").printTable();
     }
 }
