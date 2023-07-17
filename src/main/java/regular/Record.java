@@ -1,6 +1,8 @@
-package  regular;
+package regular;
 
 public class Record {
+    private int ID;
+    static int count;
     private String mode;
     private double magnitudeVibration;
     private double phaseVibration;
@@ -12,6 +14,7 @@ public class Record {
     private double totalMagnitudeWeight;
     private double totalPhaseWeight;
     private Complex totalComplexWeight;
+    static int[] sml = new int[]{3, 7, 17};
 
     public enum Stage {On, Off}
 
@@ -24,6 +27,8 @@ public class Record {
                   double phaseWeight,
                   int reference,
                   Stage stage) {
+        this.ID = count;
+        count++;
         this.mode = mode;
         this.magnitudeVibration = magnitudeVibration;
         this.phaseVibration = phaseVibration;
@@ -51,39 +56,33 @@ public class Record {
         this.stage = Stage.Off;
     }
 
-//    @Override
-//    public String toString() {
-//        return "mode='" + mode + '\'' +
-//                "; mP2P=" + String.format("%.0f", magnitudeVibration) +
-//                "; pP2P=" + String.format("%.0f", phaseVibration) +
-//                "; zP2P=" + complexVibration.toString(2) +
-//                "; mWeight=" + String.format("%.0f", magnitudeWeight) +
-//                "; pWeight=" + String.format("%.0f", phaseWeight) +
-//                "; zWeight=" + complexWeight.toString(2) +
-//                "; ref=" + reference +
-//                "; stage=" + stage + "\n";
-//    }
+    public int[] getSml() {
+        return sml;
+    }
+
+    public int getId() {
+        return ID;
+    }
+
     @Override
     public String toString() {
-        return "| " + " ".repeat(10-mode.length()) + mode +" | " +
-                " ".repeat(7-String.format("%.0f", magnitudeVibration).length()) +
-                String.format("%.0f", magnitudeVibration)
-                + " | " +
-                " ".repeat(7-String.format("%.0f", phaseVibration).length()) +
-                String.format("%.0f", phaseVibration) + " | " +
-                " ".repeat(17-complexVibration.toString(2).length()) +
-                complexVibration.toString(2) + " | " +
-                " ".repeat(7-String.format("%.0f", magnitudeWeight).length()) +
-                String.format("%.0f", magnitudeWeight) + " | " +
-                " ".repeat(7-String.format("%.0f", phaseWeight).length()) +
-                String.format("%.0f", phaseWeight) + " | " +
-                " ".repeat(18-complexWeight.toString(2).length()) +
-                complexWeight.toString(2) + " | " +
-                " ".repeat(3-String.valueOf(reference).length()) +
-                reference + " | " +
-                " ".repeat(3-String.valueOf(stage).length()) +
-                stage + " | " + "\n";
+        return  "| " + printColumn(sml[0], String.valueOf(ID)) +
+                printColumn(sml[1], String.valueOf(mode)) +
+                printColumn(sml[1], String.format("%.0f", magnitudeVibration)) +
+                printColumn(sml[1], String.format("%.0f", phaseVibration)) +
+                printColumn(sml[2], complexVibration.toString(2)) +
+                printColumn(sml[1], String.format("%.0f", magnitudeWeight)) +
+                printColumn(sml[1], String.format("%.0f", phaseWeight)) +
+                printColumn(sml[2], complexWeight.toString(2)) +
+                printColumn(sml[0], String.valueOf(reference)) +
+                printColumn(sml[1], String.format("%.0f", totalMagnitudeWeight)) +
+                printColumn(sml[1], String.format("%.0f", totalPhaseWeight)) +
+                printColumn(sml[2], totalComplexWeight.toString(2)) +
+                printColumn(sml[0], String.valueOf(stage)) + "\n";
+    }
 
+    private String printColumn (int n, String column){
+        return  " ".repeat(n - column.length()) + column + " | ";
     }
 
     public void setTotalMagnitudeWeight(double totalMagnitudeWeight) {

@@ -1,8 +1,8 @@
 package regular;
 
-import org.apache.poi.ss.usermodel.Cell;
-
 import java.util.*;
+
+import regular.Record;
 
 public class Repository {
 
@@ -21,7 +21,8 @@ public class Repository {
     }
 
     public void remove(Record record) {
-        repository.removeIf(record1 -> record1.equals(record));
+        repository.removeIf(record1
+                -> record1.equals(record));
     }
 
 
@@ -35,7 +36,7 @@ public class Repository {
         return set;
     }
 
-    public Repository getRepositoryUniqueMode(String mode){
+    public Repository getRepositoryUniqueMode(String mode) {
         Iterator<Record> record = repository.iterator();
         Repository repository = new Repository();
         while (record.hasNext()) {
@@ -51,6 +52,11 @@ public class Repository {
         return repository;
     }
 
+    public Record getRecord(int id) {
+        return repository.get(id);
+    }
+
+
     @Override
     public String toString() {
         return "Repository{" +
@@ -59,22 +65,32 @@ public class Repository {
     }
 
     public void printTable() {
-        System.out.print("+------------+---------+---------+-------------------");
-        System.out.print("+---------+---------+--------------------");
-        System.out.print("+-----+-----+\n" + "|       mode ");
-        System.out.print("|    mP2P |    pP2P |              zP2P ");
-        System.out.print("| mWeight | pWeight |            zWeight ");
-        System.out.print("| ref | use |\n");
-        System.out.print("+------------+---------+---------+-------------------");
-        System.out.print("+---------+---------+--------------------");
-        System.out.print("+-----+-----+\n");
+        int[] sml = Record.sml;
+        String pline = "+" + "-".repeat(sml[1] + 2) +
+                "+" + "-".repeat(sml[1] + 2) + "+" + "-".repeat(sml[2] + 2);
+        String line = "+" + "-".repeat(sml[0] + 2) +
+                "+" + "-".repeat(sml[1] + 2) + pline + pline +
+                "+" + "-".repeat(sml[0] + 2) + pline +
+                "+" + "-".repeat(sml[0] + 2) + "+";
+        System.out.println(line);
+        String head = "|" + " ".repeat(sml[0] - "id".length() + 1) + "id |" +
+                headColumn(sml[1], "mode") + headColumn(sml[1], "mP2P") +
+                headColumn(sml[1], "pP2P") + headColumn(sml[2], "zP2P") +
+                headColumn(sml[1], "mWeight") + headColumn(sml[1], "pWeight") +
+                headColumn(sml[2], "zWeight") + headColumn(sml[0], "ref") +
+                headColumn(sml[1], "mTotWgt") + headColumn(sml[1], "pTotWgt") +
+                headColumn(sml[2], "zTotWgt") + headColumn(sml[0], "use");
+        System.out.println(head);
+        System.out.println(line);
         System.out.print(Arrays.toString(repository.toArray()).
                 replace("[", "").
                 replace("]", "").
                 replace(", ", ""));
-        System.out.print("+------------+---------+---------+-------------------");
-        System.out.print("+---------+---------+--------------------");
-        System.out.println("+-----+-----+");
+        System.out.println(line);
+    }
+
+    private String headColumn(int n, String title) {
+        return " ".repeat(n - title.length() + 1) + title + " |";
     }
 
 }

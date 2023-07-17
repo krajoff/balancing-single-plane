@@ -9,4 +9,8 @@ public class Transform {
         double im = magnitude*sin(Math.toRadians(phase));
         return new Complex(re, im);
     }
+
+    public static Complex toComplex() {
+        return toComplex(0,0);
+    }
 }
