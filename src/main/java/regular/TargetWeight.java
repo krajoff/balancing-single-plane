@@ -8,8 +8,9 @@ public class TargetWeight {
         Complex sensitivity = deltaVibration.divides(deltaWeight);
         mSen = sensitivity.abs();
         pSen = Math.toDegrees(sensitivity.phase());
-        Complex targetWeight = deltaWeight.times(first.getComplexVibration()).
-                divides(deltaVibration).plus(first.getComplexVibration());
-        return new Complex(0,0);
+        Complex targetWeight = first.getComplexVibration().
+                minus(deltaWeight.times(first.getComplexVibration()).
+                divides(deltaVibration));
+        return targetWeight;
     }
 }
