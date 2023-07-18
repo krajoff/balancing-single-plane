@@ -251,4 +251,16 @@ public class Complex {
     public Complex tan() {
         return sin().divides(cos());
     }
+
+    /**
+     * Returns complex number with shift phase.
+     *
+     * @param that the other phase
+     * @return the complex number
+     */
+    public Complex shift(double that) {
+        double z = this.abs();
+        return new Complex(z*Math.cos(that+this.phase()),
+                z*Math.sin(that+this.phase()));
+    }
 }

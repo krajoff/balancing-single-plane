@@ -2,11 +2,27 @@ package regular;
 
 import java.util.*;
 
-import regular.Record;
-
 public class Repository {
 
     private List<Record> repository = new ArrayList<>();
+
+    int[] sml = Record.sml;
+
+    private String head = "|" + " ".repeat(sml[0] - "id".length() + 1) + "id |" +
+            headColumn(sml[1], "mode") + headColumn(sml[1], "mP2P") +
+            headColumn(sml[1], "pP2P") + headColumn(sml[2], "zP2P") +
+            headColumn(sml[1], "mWeight") + headColumn(sml[1], "pWeight") +
+            headColumn(sml[2], "zWeight") + headColumn(sml[0], "ref") +
+            headColumn(sml[1], "mTotWgt") + headColumn(sml[1], "pTotWgt") +
+            headColumn(sml[2], "zTotWgt") + headColumn(sml[0], "use");
+
+    private String pline = "+" + "-".repeat(sml[1] + 2) +
+            "+" + "-".repeat(sml[1] + 2) + "+" + "-".repeat(sml[2] + 2);
+
+    private String line = "+" + "-".repeat(sml[0] + 2) +
+            "+" + "-".repeat(sml[1] + 2) + pline + pline +
+            "+" + "-".repeat(sml[0] + 2) + pline +
+            "+" + "-".repeat(sml[0] + 2);
 
     public Repository(List<Record> repository) {
         this.repository = repository;
@@ -24,7 +40,6 @@ public class Repository {
         repository.removeIf(record1
                 -> record1.equals(record));
     }
-
 
     public Set<String> uniqueMode() {
         Iterator<Record> record = repository.iterator();
@@ -56,7 +71,6 @@ public class Repository {
         return repository.get(id);
     }
 
-
     @Override
     public String toString() {
         return "Repository{" +
@@ -64,29 +78,27 @@ public class Repository {
                 '}';
     }
 
-    public void printTable() {
-        int[] sml = Record.sml;
-        String pline = "+" + "-".repeat(sml[1] + 2) +
-                "+" + "-".repeat(sml[1] + 2) + "+" + "-".repeat(sml[2] + 2);
-        String line = "+" + "-".repeat(sml[0] + 2) +
-                "+" + "-".repeat(sml[1] + 2) + pline + pline +
-                "+" + "-".repeat(sml[0] + 2) + pline +
-                "+" + "-".repeat(sml[0] + 2) + "+";
+    public void printRawTable() {
         System.out.println(line);
-        String head = "|" + " ".repeat(sml[0] - "id".length() + 1) + "id |" +
-                headColumn(sml[1], "mode") + headColumn(sml[1], "mP2P") +
-                headColumn(sml[1], "pP2P") + headColumn(sml[2], "zP2P") +
-                headColumn(sml[1], "mWeight") + headColumn(sml[1], "pWeight") +
-                headColumn(sml[2], "zWeight") + headColumn(sml[0], "ref") +
-                headColumn(sml[1], "mTotWgt") + headColumn(sml[1], "pTotWgt") +
-                headColumn(sml[2], "zTotWgt") + headColumn(sml[0], "use");
         System.out.println(head);
         System.out.println(line);
-        System.out.print(Arrays.toString(repository.toArray()).
-                replace("[", "").
-                replace("]", "").
-                replace(", ", ""));
+        for (Record record : repository) {
+            System.out.println(record.toString());
+        }
         System.out.println(line);
+    }
+
+    public void printWholeTable() {
+        String part = headColumn(sml[1], "mTarWgt") + headColumn(sml[1], "pTarWgt") +
+                headColumn(sml[2], "zTarWgt");
+        System.out.println(line + pline);
+        System.out.print(head);
+        System.out.println(part);
+        System.out.println(line + pline);
+        for (Record record : repository) {
+            System.out.println(record.printAllData());
+        }
+        System.out.println(line + pline);
     }
 
     private String headColumn(int n, String title) {
